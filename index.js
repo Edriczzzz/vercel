@@ -1,9 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import taskRoutes from "./routes/tasks.js";
 import authRoutes from "./routes/auth.js";
-
+import taskRoutes from "./routes/tasks.js";
 
 dotenv.config();
 
@@ -12,7 +11,7 @@ const app = express();
 // Middlewares
 app.use(cors({
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
 app.use(express.json());
@@ -22,10 +21,7 @@ app.get("/", (req, res) => {
   res.json({ 
     message: "✅ API funcionando correctamente",
     version: "1.0.0",
-    endpoints: {
-      auth: "/api/auth/login",
-      tasks: "/api/tasks"
-    }
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -33,7 +29,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// Manejo de rutas no encontradas
+// Manejo de errores 404
 app.use((req, res) => {
   res.status(404).json({ 
     error: "Ruta no encontrada",
