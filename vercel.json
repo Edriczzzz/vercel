@@ -11,5 +11,13 @@
       "src": "/(.*)",
       "dest": "index.js"
     }
-  ]
+  ],
+
+    "functions": {
+    "api/**/*.js": {
+      "includeFiles": "node_modules/iconv-lite/**"
+    }
+  }
+
+  
 }
